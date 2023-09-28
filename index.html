@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="cdnjs/sweetalert.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+
+  <!-- mobile view -->
+  <section class="row justify-content-center">
+    <div class="pt-5 pb-4 pr-0">
+      <h1 class="text-center">HTML,CSS,JavaScript Free Code Editor</h1>
+    </div>
+    <div class="mytabs width-70 ">
+      
+      <input type="radio" id="tabHtml" name="mytabs" checked="checked" />
+      <label for="tabHtml"><img src="img/html.png" alt="" width="20px"> HTML</label>
+      <div class="tab">
+        <div class="text-end">
+          <img
+          class="img-cls1"
+            onclick="txtCopyMobile()"
+            src="img/1621635.png"
+            alt=""
+            width="20px" 
+          />
+        </div>
+        <!-- textarea -->
+        <div>
+          <textarea id='lineCounterHtmlMobi' wrap='off' readonly>1.</textarea>
+           <textarea class="html-txtareaMobi form-control h-txtarea" id="htmlMobile" placeholder="HTML" ></textarea>
+        </div>
+
+        <!-- refresh button -->
+        <div class="col text-end">
+          <img
+            id="click-me"
+            class="img-cls1-1"
+            onclick="clearTextareaMobile()"
+            src="img/189264.png"
+            alt=""
+            width="30px"
+          />
+        </div>
+
+        <!-- download file button -->
+        <div class="justify-content-around d-no-mobile">
+          <button class="btn-all" id="btn-html-codeHtml">
+            Download as HTML File
+          </button>
+          <p class="mb-0">OR</p>
+          <button
+            class="btn-p-t1 btn-all " id="btn-html-plainHtml">
+            Download as Plain Text
+          </button>
+        </div>
+      </div>
+
+      <input type="radio" id="tabCss" name="mytabs" />
+      <label for="tabCss"><img src="img/css.png" class="mar-r" alt="" width="20px">CSS</label>
+      <div class="tab">
+        <div class="text-end">
+          <img
+          class="img-cls2"
+            onclick="txtCopyMobile2()"
+            src="img/1621635.png"
+            alt=""
+            width="20px"
+          />
+        </div>
+        <!-- textarea -->
+        <div>
+        <textarea id='lineCounterCssMobi' wrap='off' readonly>1.</textarea>
+        <textarea class="css-txtareaMobi form-control h-txtarea" id="cssMobile" placeholder="CSS"></textarea>
+        </div>
+        
+
+        <!-- refresh button -->
+        <div class="col text-end">
+          <img
+            id="btn2"
+            class="img-cls2-2"
+            onclick="clearTextMobilecss()"
+            src="img/189264.png"
+            alt=""
+            width="30px"
+          />
+        </div>
+
+        <div class="justify-content-around d-no-mobile">
+          <button class="btn-all" id="btn-css-codeCss">
+            Download as CSS File
+          </button>
+          <p class="mb-0">OR</p>
+
+          <button
+            class="btn-p-t2 btn-all" id="btn-css-plainCss">
+            Download as Plain Text
+          </button>
+        </div>
+      </div>
+
+      <input type="radio" id="tabJs" name="mytabs" />
+      <label for="tabJs"><img src="img/js.png" class="mar-r" alt="" width="20px">js</label>
+      <div class="tab">
+        <div class="text-end">
+          <img
+          class="img-cls3"
+            onclick="txtCopyMobile3()"
+            src="img/1621635.png"
+            alt=""
+            width="20px"
+          
+          />
+        </div>
+        <!-- textarea -->
+        <div>
+          <textarea id='lineCounterJsMobi' wrap='off' readonly>1.</textarea>
+        <textarea
+          id="jsMobile"
+          class="js-txtareaMobi form-control h-txtarea"
+          placeholder="JavaScript"
+        ></textarea>
+        </div>
+        
+
+        <!-- refresh button -->
+        <div class="col" style="text-align: end">
+          <img
+            id="btn3"
+            class="img-cls3-3"
+            onclick="clearTextMobilejs()"
+            src="img/189264.png"
+            alt=""
+            width="30px"
+          />
+        </div>
+        <div class="justify-content-around d-no-mobile">
+          <button class="btn-all" id="btn-js-codeJs">
+            Download as JS File
+          </button>
+          <p class="mb-0">OR</p>
+          <button
+            class="btn-p-t btn-all" id="btn-js-plainJs">
+            Download as Plain Text
+          </button>
+        </div>
+      </div>
+      
+    </div>
+    <div class="pr-0"><iframe class="width-100" id="codeMobile"></iframe></div>
+  </section>
+  <footer>
+    <div class="footer-copyright text-center">&copy; Developed with ❤️</i> by
+      <a href="#" class="white-text"> MN Shariff</a>.
+    </div>
+  </footer>
+
+  <!-- <script type="text/javascript" src="app.js"></script> -->
+  <!-- <script type="text/javascript" src="internet.js"></script> -->
+  <script src="dist/js/bootstrap.min.js"></script>
+  <script src="cdnjs/sweetalert.min.js"></script>
+  <!-- <script src="line.js"></script> -->
+  <script type="text/javascript" src="lineMobi.js"></script>
+  <script type="text/javascript" src="mobile-app.js"></script>
+  </body>
+</html>

@@ -250,4 +250,28 @@ document.getElementById("btn-js-codeJs").addEventListener("click", function () {
 // end of js files downloads
 
 
+// Predefined code snippets
+const predefinedCode = {
+  html: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Document</title>\n</head>\n<body>\n    <h1>Hello World</h1>\n</body>\n</html>",
+  css: "body {\n    background-color: #f0f0f0;\n    font-family: Arial, sans-serif;\n}\nh1 {\n    color: #333;\n}",
+  js: "console.log('Hello World');\nfunction greet() {\n    alert('Hello!');\n}"
+};
 
+// Event listeners for auto code insertion
+document.getElementById('htmlMobile').addEventListener('input', function() {
+  if (this.value.trim() === "") {
+    this.value = predefinedCode.html;
+  }
+});
+
+document.getElementById('cssMobile').addEventListener('input', function() {
+  if (this.value.trim() === "") {
+    this.value = predefinedCode.css;
+  }
+});
+
+document.getElementById('jsMobile').addEventListener('input', function() {
+  if (this.value.trim() === "") {
+    this.value = predefinedCode.js;
+  }
+});

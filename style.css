@@ -1,6 +1,8 @@
 body {
     text-align: center;
-    font-family: "Hack", monospace !important;
+    font-family: "Noto Sans", serif;
+    font-optical-sizing: auto;
+
     box-sizing: border-box;
 }
 

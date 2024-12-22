@@ -15,14 +15,14 @@ codeEditorMobi.addEventListener('scroll', () => {
 
 // css line
 codeEditorCssMobi.addEventListener('scroll', () => {
-    codeEditorCssMobi.scrollTop = codeEditorCssMobi.scrollTop;
-    codeEditorCssMobi.scrollLeft = codeEditorCssMobi.scrollLeft;
+    lineCounterCssMobi.scrollTop = codeEditorCssMobi.scrollTop;
+    lineCounterCssMobi.scrollLeft = codeEditorCssMobi.scrollLeft;
 });
 
 // js line
 codeEditorJsMobi.addEventListener('scroll', () => {
-    codeEditorJsMobi.scrollTop = codeEditorJsMobi.scrollTop;
-    codeEditorJsMobi.scrollLeft = codeEditorJsMobi.scrollLeft;
+    lineCounterJsMobi.scrollTop = codeEditorJsMobi.scrollTop;
+    lineCounterJsMobi.scrollLeft = codeEditorJsMobi.scrollLeft;
 });
 
 // html line keydown

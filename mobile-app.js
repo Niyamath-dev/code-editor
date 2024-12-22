@@ -94,14 +94,20 @@ function saveTextAsFileMobileThree(textToWrite, fileNameToSaveAs) {
 // refresh code from textarea
 function clearTextareaMobile() {
   document.getElementById("htmlMobile").value = "";
+  document.getElementById('lineCounterHtmlMobi').value = '1.'; // Reset line counter
+
 }
 
 function clearTextMobilecss() {
   document.getElementById("cssMobile").value = "";
+  document.getElementById('lineCounterCssMobi').value = '1.'; // Reset line counter
+
 }
 
 function clearTextMobilejs() {
   document.getElementById("jsMobile").value = "";
+  document.getElementById('lineCounterJsMobi').value = '1.'; // Reset line counter
+
 }
 // copy text to clipboard
 function txtCopyMobile() {

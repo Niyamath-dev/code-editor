@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="HTML, CSS, and JavaScript free code editor for developers. Create, edit, and download your code files effortlessly.">
+  <meta name="description"
+    content="HTML, CSS, and JavaScript free code editor for developers. Create, edit, and download your code files effortlessly.">
   <meta name="keywords" content="HTML editor, CSS editor, JavaScript editor, free code editor, download code files">
   <meta name="author" content="MN Shariff">
   <title>HTML, CSS, and JavaScript Free Code Tester</title>
-  
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="cdnjs/sweetalert.min.css">
-  <link 
-    rel="stylesheet" 
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
-  >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 
   <!-- Font Style -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
   <!-- Main Section -->
   <section class="row justify-content-center">
     <div class="pt-5 pb-4 pr-0">
       <h1 class="text-center">HTML, CSS, JavaScript Free Code Tester</h1>
     </div>
-    
+
     <div class="mytabs width-70">
       <!-- HTML Tab -->
       <input type="radio" id="tabHtml" name="mytabs" checked>
@@ -38,31 +39,15 @@
       </label>
       <div class="tab">
         <div class="text-end">
-          <img 
-            class="img-cls1" 
-            onclick="txtCopyMobile()" 
-            src="img/1621635.png" 
-            alt="Copy Button" 
-            width="20px"
-          >
+          <img class="img-cls1" onclick="txtCopyMobile()" src="img/1621635.png" alt="Copy Button" width="20px">
         </div>
         <div>
           <textarea id="lineCounterHtmlMobi" wrap="off" readonly>1.</textarea>
-          <textarea 
-            class="html-txtareaMobi form-control h-txtarea" 
-            id="htmlMobile" 
-            placeholder="HTML"
-          ></textarea>
+          <textarea class="html-txtareaMobi form-control h-txtarea" id="htmlMobile" placeholder="HTML"></textarea>
         </div>
         <div class="col text-end">
-          <img 
-            id="click-me" 
-            class="img-cls1-1" 
-            onclick="clearTextareaMobile()" 
-            src="img/189264.png" 
-            alt="Refresh Button" 
-            width="30px"
-          >
+          <img id="click-me" class="img-cls1-1" onclick="clearTextareaMobile()" src="img/189264.png"
+            alt="Refresh Button" width="30px">
         </div>
         <div class="justify-content-around d-no-mobile">
           <button class="btn-all" id="btn-html-codeHtml">Download as HTML File</button>
@@ -70,7 +55,7 @@
           <button class="btn-p-t1 btn-all" id="btn-html-plainHtml">Download as Plain Text</button>
         </div>
       </div>
-      
+
       <!-- CSS Tab -->
       <input type="radio" id="tabCss" name="mytabs">
       <label for="tabCss">
@@ -78,31 +63,15 @@
       </label>
       <div class="tab">
         <div class="text-end">
-          <img 
-            class="img-cls2" 
-            onclick="txtCopyMobile2()" 
-            src="img/1621635.png" 
-            alt="Copy Button" 
-            width="20px"
-          >
+          <img class="img-cls2" onclick="txtCopyMobile2()" src="img/1621635.png" alt="Copy Button" width="20px">
         </div>
         <div>
           <textarea id="lineCounterCssMobi" wrap="off" readonly>1.</textarea>
-          <textarea 
-            class="css-txtareaMobi form-control h-txtarea" 
-            id="cssMobile" 
-            placeholder="CSS"
-          ></textarea>
+          <textarea class="css-txtareaMobi form-control h-txtarea" id="cssMobile" placeholder="CSS"></textarea>
         </div>
         <div class="col text-end">
-          <img 
-            id="btn2" 
-            class="img-cls2-2" 
-            onclick="clearTextMobilecss()" 
-            src="img/189264.png" 
-            alt="Refresh Button" 
-            width="30px"
-          >
+          <img id="btn2" class="img-cls2-2" onclick="clearTextMobilecss()" src="img/189264.png" alt="Refresh Button"
+            width="30px">
         </div>
         <div class="justify-content-around d-no-mobile">
           <button class="btn-all" id="btn-css-codeCss">Download as CSS File</button>
@@ -110,7 +79,7 @@
           <button class="btn-p-t2 btn-all" id="btn-css-plainCss">Download as Plain Text</button>
         </div>
       </div>
-      
+
       <!-- JavaScript Tab -->
       <input type="radio" id="tabJs" name="mytabs">
       <label for="tabJs">
@@ -118,31 +87,15 @@
       </label>
       <div class="tab">
         <div class="text-end">
-          <img 
-            class="img-cls3" 
-            onclick="txtCopyMobile3()" 
-            src="img/1621635.png" 
-            alt="Copy Button" 
-            width="20px"
-          >
+          <img class="img-cls3" onclick="txtCopyMobile3()" src="img/1621635.png" alt="Copy Button" width="20px">
         </div>
         <div>
           <textarea id="lineCounterJsMobi" wrap="off" readonly>1.</textarea>
-          <textarea 
-            id="jsMobile" 
-            class="js-txtareaMobi form-control h-txtarea" 
-            placeholder="JavaScript"
-          ></textarea>
+          <textarea id="jsMobile" class="js-txtareaMobi form-control h-txtarea" placeholder="JavaScript"></textarea>
         </div>
         <div class="col text-end">
-          <img 
-            id="btn3" 
-            class="img-cls3-3" 
-            onclick="clearTextMobilejs()" 
-            src="img/189264.png" 
-            alt="Refresh Button" 
-            width="30px"
-          >
+          <img id="btn3" class="img-cls3-3" onclick="clearTextMobilejs()" src="img/189264.png" alt="Refresh Button"
+            width="30px">
         </div>
         <div class="justify-content-around d-no-mobile">
           <button class="btn-all" id="btn-js-codeJs">Download as JS File</button>
@@ -155,7 +108,7 @@
       <iframe class="width-100" id="codeMobile"></iframe>
     </div>
   </section>
-  
+
   <!-- Footer -->
   <footer>
     <div class="footer-copyright text-center">
@@ -165,8 +118,12 @@
 
   <!-- Scripts -->
   <script src="dist/js/bootstrap.min.js"></script>
-  <script src="cdnjs/sweetalert.min.js"></script>
+  <!-- <script src="cdnjs/sweetalert.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+    integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="lineMobi.js"></script>
   <script src="mobile-app.js"></script>
 </body>
+
 </html>

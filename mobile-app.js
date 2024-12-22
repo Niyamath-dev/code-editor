@@ -117,7 +117,7 @@ function txtCopyMobile() {
 
   navigator.clipboard.writeText(copyText.value);
 
-  swal("Copied!", "Your HTML code is copied to Clipboard:" + " " + copyText.value);
+  swal("Copied!", "Your HTML code is copied to Clipboard");
 }
 
 function txtCopyMobile2() {
@@ -128,7 +128,7 @@ function txtCopyMobile2() {
 
   navigator.clipboard.writeText(copyText.value);
 
-  swal("Copied!", "Your CSS code is copied to Clipboard:" + " " + copyText.value);
+  swal("Copied!", "Your CSS code is copied to Clipboard");
 }
 function txtCopyMobile3() {
   var copyText = document.getElementById("jsMobile");
@@ -140,7 +140,7 @@ function txtCopyMobile3() {
 
   swal(
     "Copied!",
-    "Your Javascript code is copied to Clipboard:" + " " + copyText.value
+    "Your Javascript code is copied to Clipboard"
   );
 }
 

@@ -108,43 +108,122 @@ function clearTextMobilejs() {
   document.getElementById("jsMobile").value = "";
   document.getElementById('lineCounterJsMobi').value = '1.'; // Reset line counter
 }
-// copy text to clipboard
+
+
 function txtCopyMobile() {
   var copyText = document.getElementById("htmlMobile");
+  var textToCopy = copyText.value.trim();
 
+  if (textToCopy === "") {
+    swal("Empty!", "There's nothing to copy. Please enter some code.");
+    return;
+  }
+
+  copyText.focus();
   copyText.select();
   copyText.setSelectionRange(0, 99999);
+  copyText.blur(); // Close keyboard on mobile devices
 
-  navigator.clipboard.writeText(copyText.value);
-
-  swal("Copied!", "Your HTML code is copied to Clipboard");
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        swal("Copied!", "Your HTML code is copied to Clipboard");
+      })
+      .catch(err => {
+        console.error("Clipboard error:", err);
+        swal("Error!", "Clipboard access denied on this device.");
+      });
+  } else {
+    try {
+      let successful = document.execCommand("copy");
+      if (successful) {
+        swal("Copied!", "Your HTML code is copied to Clipboard");
+      } else {
+        swal("Error!", "Copy command failed. Try manually copying.");
+      }
+    } catch (err) {
+      console.error("execCommand error:", err);
+      swal("Error!", "Copy command is not supported in this browser.");
+    }
+  }
 }
+
 
 function txtCopyMobile2() {
   var copyText = document.getElementById("cssMobile");
+  var textToCopy = copyText.value.trim();
 
+  if (textToCopy === "") {
+    swal("Empty!", "There's nothing to copy. Please enter some code.");
+    return;
+  }
+
+  copyText.focus();
   copyText.select();
   copyText.setSelectionRange(0, 99999);
+  copyText.blur(); // Close keyboard on mobile devices
 
-  navigator.clipboard.writeText(copyText.value);
-
-  swal("Copied!", "Your CSS code is copied to Clipboard");
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        swal("Copied!", "Your HTML code is copied to Clipboard");
+      })
+      .catch(err => {
+        console.error("Clipboard error:", err);
+        swal("Error!", "Clipboard access denied on this device.");
+      });
+  } else {
+    try {
+      let successful = document.execCommand("copy");
+      if (successful) {
+        swal("Copied!", "Your HTML code is copied to Clipboard");
+      } else {
+        swal("Error!", "Copy command failed. Try manually copying.");
+      }
+    } catch (err) {
+      console.error("execCommand error:", err);
+      swal("Error!", "Copy command is not supported in this browser.");
+    }
+  }
 }
+
 function txtCopyMobile3() {
   var copyText = document.getElementById("jsMobile");
+  var textToCopy = copyText.value.trim();
 
+  if (textToCopy === "") {
+    swal("Empty!", "There's nothing to copy. Please enter some code.");
+    return;
+  }
+
+  copyText.focus();
   copyText.select();
   copyText.setSelectionRange(0, 99999);
+  copyText.blur(); // Close keyboard on mobile devices
 
-  navigator.clipboard.writeText(copyText.value);
-
-  swal(
-    "Copied!",
-    "Your Javascript code is copied to Clipboard"
-  );
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        swal("Copied!", "Your HTML code is copied to Clipboard");
+      })
+      .catch(err => {
+        console.error("Clipboard error:", err);
+        swal("Error!", "Clipboard access denied on this device.");
+      });
+  } else {
+    try {
+      let successful = document.execCommand("copy");
+      if (successful) {
+        swal("Copied!", "Your HTML code is copied to Clipboard");
+      } else {
+        swal("Error!", "Copy command failed. Try manually copying.");
+      }
+    } catch (err) {
+      console.error("execCommand error:", err);
+      swal("Error!", "Copy command is not supported in this browser.");
+    }
+  }
 }
-
-
 
 // save code files as plain text and code file
 

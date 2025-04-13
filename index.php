@@ -44,8 +44,8 @@ if (!isset($_SESSION['user_id'])) {
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="#">Code Tester</a>
           </li>
@@ -55,7 +55,7 @@ if (!isset($_SESSION['user_id'])) {
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>
-        </ul>
+        </ul> -->
         <form action="logout.php" method="POST">
           <button type="submit" class="btn btn-danger custom-violetbtn"
             onclick="return confirm('Are you sure you want to logout?');">Logout</button>
@@ -169,7 +169,8 @@ if (!isset($_SESSION['user_id'])) {
       <iframe class="width-100" id="codeMobile"></iframe>
     </div>
   </section>
-  <section id="about" class="py-5">
+  <!-- about us -->
+  <!-- <section id="about" class="py-5">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
@@ -201,7 +202,7 @@ if (!isset($_SESSION['user_id'])) {
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Footer -->
   <footer>

@@ -22,21 +22,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($name) || empty($email) || empty($password)) {
         $error = "All fields are required.";
     } else {
-        // Hash the password
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        // Insert user into the database
-        $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
-        $stmt->bindParam(':name', $name);
+        // Check if email already exists
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
 
-        try {
-            $stmt->execute();
-            header("Location: login.html"); // Redirect to login page
+        if ($count > 0) {
+            // Email already exists
+            echo "<script>
+                alert('You already signed up. Redirecting to login page...');
+                setTimeout(function() {
+                    window.location.href = 'login.html';
+                }, 500);
+            </script>";
             exit();
-        } catch (PDOException $e) {
-            $error = "Email already exists.";
+        } else {
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert user into the database
+            $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashedPassword);
+
+            try {
+                $stmt->execute();
+                header("Location: login.html"); // Redirect to login page
+                exit();
+            } catch (PDOException $e) {
+                $error = "Error occurred during signup.";
+            }
         }
     }
 }

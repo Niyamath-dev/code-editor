@@ -330,3 +330,13 @@ position: fixed !important;
 .mt-70{
     margin-top: 70px !important;
 }
+
+.row{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.pdr{
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}

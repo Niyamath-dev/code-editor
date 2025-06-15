@@ -40,22 +40,8 @@ if (!isset($_SESSION['user_id'])) {
   <nav class="navbar navbar-expand-lg bg-body-white glassmorphism">
     <div class="container">
       <a class="navbar-brand" href="#">HCJ Code Tester</a>
-      <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
+
       <div class="justify-content-end" id="navbarSupportedContent">
-        <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Code Tester</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-        </ul> -->
         <form action="logout.php" method="POST">
           <button type="submit" class="btn btn-danger custom-violetbtn"
             onclick="return confirm('Are you sure you want to logout?');">Logout</button>
@@ -69,18 +55,15 @@ if (!isset($_SESSION['user_id'])) {
     <div class="container text-center my-2">
       <div class="row align-items-center">
         <div class="col">
-
         </div>
         <div class="col">
           <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
           <p>You are now logged in.</p>
         </div>
         <div class="col">
-
         </div>
       </div>
     </div>
-
 
     <div class="pb-4 pr-0">
       <h1 class="text-center">HTML, CSS, JavaScript Free Code Tester</h1>
@@ -99,7 +82,7 @@ if (!isset($_SESSION['user_id'])) {
         <div>
           <textarea id="lineCounterHtmlMobi" wrap="off" readonly>1.</textarea>
           <div>
-            <textarea class="html-txtareaMobi form-control h-txtarea" id="htmlMobile" placeholder="HTML"></textarea>
+            <textarea class="html-txtareaMobi form-control h-txtarea" id="htmlMobile" placeholder="HTML" draggable="false"></textarea>
           </div>
         </div>
         <div class="col text-end">
@@ -125,7 +108,7 @@ if (!isset($_SESSION['user_id'])) {
         <div>
           <textarea id="lineCounterCssMobi" wrap="off" readonly>1.</textarea>
           <div>
-            <textarea class="css-txtareaMobi form-control h-txtarea" id="cssMobile" placeholder="CSS"></textarea>
+            <textarea class="css-txtareaMobi form-control h-txtarea" id="cssMobile" placeholder="CSS" draggable="false"></textarea>
           </div>
         </div>
         <div class="col text-end">
@@ -151,7 +134,7 @@ if (!isset($_SESSION['user_id'])) {
         <div>
           <textarea id="lineCounterJsMobi" wrap="off" readonly>1.</textarea>
           <div>
-            <textarea id="jsMobile" class="js-txtareaMobi form-control h-txtarea" placeholder="JavaScript"></textarea>
+            <textarea id="jsMobile" class="js-txtareaMobi form-control h-txtarea" placeholder="JavaScript" draggable="false"></textarea>
           </div>
         </div>
         <div class="col text-end">
@@ -165,44 +148,46 @@ if (!isset($_SESSION['user_id'])) {
         </div>
       </div>
     </div>
-    <div class="pdr iframecls">
-      <iframe class="width-100" id="codeMobile"></iframe>
-    </div>
-  </section>
-  <!-- about us -->
-  <!-- <section id="about" class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <img src="your-about-image.jpg" alt="About Us" class="img-fluid rounded">
-        </div>
-        <div class="col-md-6">
-          <h2 class="mb-4">About HCJ Code Tester</h2>
-          <p>Welcome to HCJ Code Tester, your free and easy-to-use online code editor for HTML, CSS, and
-            JavaScript. We believe that coding should be accessible to everyone, regardless of their
-            experience level. Whether you're a seasoned developer, a student learning to code, or just
-            someone experimenting with web technologies, our platform provides a simple and intuitive
-            environment to write, test, and share your code.</p>
 
-          <p>Our goal is to empower developers by providing a convenient tool to quickly prototype and
-            experiment with web projects. With HCJ Code Tester, you can:</p>
-          <ul class="list-unstyled">
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Write and edit HTML, CSS, and
-              JavaScript code in real-time.</li>
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Preview your code's output in a
-              live iframe.</li>
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Download your code as individual
-              files or plain text.</li>
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Copy code snippets with ease.</li>
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Clear the editor quickly for a fresh start.
-            </li>
-          </ul>
-          <p>We are constantly working to improve HCJ Code Tester and add new features. If you have any
-            feedback or suggestions, please don't hesitate to contact us.</p>
+    <!-- Preview Section -->
+    <div class="preview-container text-center">
+      <!-- Preview Header -->
+      <div class="preview-header">
+        <div class="preview-controls">
+          <button class="preview-btn refresh-btn" title="Refresh Preview">
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <div class="device-selector">
+            <button class="preview-btn device-btn" data-device="desktop" title="Desktop View">
+              <i class="bi bi-display"></i>
+            </button>
+            <button class="preview-btn device-btn" data-device="tablet" title="Tablet View">
+              <i class="bi bi-tablet"></i>
+            </button>
+            <button class="preview-btn device-btn" data-device="mobile" title="Mobile View">
+              <i class="bi bi-phone"></i>
+            </button>
+          </div>
+        </div>
+      <div>
+      <span class="live-preview-text">Live Preview</span>
+      </div>
+        <div class="preview-info">
+          <span class="viewport-size">1920 x 1080</span>
         </div>
       </div>
+      
+      <!-- Preview Content -->
+      <div class="preview-content">
+        <div class="preview-loading">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <iframe class="preview-frame" id="codeMobile"></iframe>
+      </div>
     </div>
-  </section> -->
+  </section>
 
   <!-- Footer -->
   <footer>
@@ -213,12 +198,12 @@ if (!isset($_SESSION['user_id'])) {
 
   <!-- Scripts -->
   <script src="bootstrap-5.3.3-dist/js/bootstrap.min.js"></script>
-  <!-- <script src="cdnjs/sweetalert.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
     integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="lineMobi.js"></script>
   <script src="mobile-app.js"></script>
+  <script src="preview-controls.js"></script>
   <script>
     // Check if the user has scrolled and add the `scrolled` class to the navbar
     window.addEventListener('scroll', function () {
@@ -230,7 +215,6 @@ if (!isset($_SESSION['user_id'])) {
         navbar.classList.remove('scrolled');
       }
     });
-
   </script>
 </body>
 

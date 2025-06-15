@@ -109,7 +109,6 @@ function clearTextMobilejs() {
   document.getElementById('lineCounterJsMobi').value = '1.'; // Reset line counter
 }
 
-
 function txtCopyMobile() {
   var copyText = document.getElementById("htmlMobile");
   var textToCopy = copyText.value.trim();
@@ -166,7 +165,7 @@ function txtCopyMobile2() {
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(textToCopy)
       .then(() => {
-        swal("Copied!", "Your HTML code is copied to Clipboard");
+        swal("Copied!", "Your CSS code is copied to Clipboard");
       })
       .catch(err => {
         console.error("Clipboard error:", err);
@@ -176,7 +175,7 @@ function txtCopyMobile2() {
     try {
       let successful = document.execCommand("copy");
       if (successful) {
-        swal("Copied!", "Your HTML code is copied to Clipboard");
+        swal("Copied!", "Your CSS code is copied to Clipboard");
       } else {
         swal("Error!", "Copy command failed. Try manually copying.");
       }
@@ -204,7 +203,7 @@ function txtCopyMobile3() {
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(textToCopy)
       .then(() => {
-        swal("Copied!", "Your HTML code is copied to Clipboard");
+        swal("Copied!", "Your JavaScript code is copied to Clipboard");
       })
       .catch(err => {
         console.error("Clipboard error:", err);
@@ -214,7 +213,7 @@ function txtCopyMobile3() {
     try {
       let successful = document.execCommand("copy");
       if (successful) {
-        swal("Copied!", "Your HTML code is copied to Clipboard");
+        swal("Copied!", "Your JavaScript code is copied to Clipboard");
       } else {
         swal("Error!", "Copy command failed. Try manually copying.");
       }
@@ -326,3 +325,4 @@ document.getElementById("btn-js-codeJs").addEventListener("click", function () {
   download(filename, text);
 }, false);
 // end of js files downloads
+

@@ -37,9 +37,9 @@ include __DIR__ . '/includes/header.php';
                     <li><a class="dropdown-item" href="#" onclick="EditorModule.showPreferences()">
                         <i class="bi bi-gear"></i> Preferences
                     </a></li>
-                    <li><a class="dropdown-item" href="#" onclick="EditorModule.showKeyboardShortcuts()">
+                    <!-- <li><a class="dropdown-item" href="#" onclick="EditorModule.showKeyboardShortcuts()">
                         <i class="bi bi-keyboard"></i> Keyboard Shortcuts
-                    </a></li>
+                    </a></li> -->
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <form action="auth/logout.php" method="POST" class="d-inline">
@@ -221,13 +221,6 @@ include __DIR__ . '/includes/header.php';
                 </div>
                 
                 <div class="preview-header-right">
-                    <div class="preview-info">
-                        <span class="viewport-size">1920 x 1080</span>
-                        <div class="breakpoint-indicator">
-                            <span class="breakpoint-name">Large</span>
-                        </div>
-                    </div>
-                    
                     <!-- Additional Controls -->
                     <div class="additional-controls">
                         <button class="preview-btn" onclick="PreviewControls.toggleFullscreen()" title="Fullscreen">
@@ -250,7 +243,7 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Quick Actions -->
-        <div class="row mt-4">
+        <div class="row mt-4 justify-content-center">
             <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-body text-center">

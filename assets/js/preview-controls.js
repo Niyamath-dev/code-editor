@@ -293,9 +293,8 @@ const PreviewControls = {
         this.currentDevice = device;
         const config = this.devices[device];
         const previewFrame = document.getElementById('codeMobile');
-        const viewportSize = document.querySelector('.viewport-size');
         
-        if (!previewFrame || !viewportSize) return;
+        if (!previewFrame) return;
         
         // Update preview frame classes
         Object.keys(this.devices).forEach(d => {
@@ -303,11 +302,14 @@ const PreviewControls = {
         });
         previewFrame.classList.add(config.class);
         
-        // Update viewport size display
-        if (device === 'desktop') {
-            viewportSize.textContent = `${window.innerWidth} x ${window.innerHeight}`;
-        } else {
-            viewportSize.textContent = config.viewport;
+        // Update viewport size display (if element exists)
+        const viewportSize = document.querySelector('.viewport-size');
+        if (viewportSize) {
+            if (device === 'desktop') {
+                viewportSize.textContent = `${window.innerWidth} x ${window.innerHeight}`;
+            } else {
+                viewportSize.textContent = config.viewport;
+            }
         }
         
         // Update active button
@@ -316,13 +318,15 @@ const PreviewControls = {
         // Apply enhanced device-specific styles
         this.applyEnhancedDeviceStyles(device, previewFrame);
         
-        // Update breakpoint indicator
+        // Update breakpoint indicator (if element exists)
         this.updateBreakpointIndicator();
         
         // Show notification
-        HCJEditor.showNotification(`Switched to ${device} view`, 'info');
+        if (typeof HCJEditor !== 'undefined' && HCJEditor.showNotification) {
+            HCJEditor.showNotification(`Switched to ${config.name} view`, 'info');
+        }
         
-        console.log(`Preview device set to: ${device}`);
+        console.log(`Preview device set to: ${device} (${config.name})`);
     },
     
     // Apply device-specific styles
@@ -820,22 +824,14 @@ const PreviewControls = {
             previewFrame.style.height = activeConfig.height;
             previewFrame.style.maxWidth = activeConfig.width;
             previewFrame.style.margin = '0 auto';
-            previewFrame.style.borderRadius = '20px';
-            previewFrame.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
-            previewFrame.style.border = '8px solid #333';
-            previewFrame.style.background = '#333';
         } else if (config.category === 'tablet') {
             previewFrame.style.width = activeConfig.width;
             previewFrame.style.height = activeConfig.height;
             previewFrame.style.maxWidth = activeConfig.width;
             previewFrame.style.margin = '0 auto';
-            previewFrame.style.borderRadius = '12px';
-            previewFrame.style.boxShadow = '0 6px 24px rgba(0, 0, 0, 0.2)';
-            previewFrame.style.border = '4px solid #666';
         } else {
             previewFrame.style.width = '100%';
             previewFrame.style.height = '100%';
-            previewFrame.style.borderRadius = '0';
         }
         
         // Apply zoom

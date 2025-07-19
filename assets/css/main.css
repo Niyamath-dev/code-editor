@@ -44,7 +44,7 @@
     /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
+    --spacing-md: 0.875rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
     
@@ -126,6 +126,11 @@ a:hover {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
+}
+
+.container.full-width {
+    max-width: none;
+    padding: 0;
 }
 
 .main-content {
@@ -484,9 +489,13 @@ a:hover {
     margin: 0 auto;
     border-radius: 20px;
     box-shadow: var(--shadow-xl);
-    border: 8px solid #333;
-    background: #333;
+    border: 4px solid #333;
+    /* background: #333; */
     position: relative;
+}
+
+.main-content{
+    padding-top: 80px;
 }
 
 .preview-frame.mobile::before {
@@ -508,7 +517,7 @@ a:hover {
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-lg);
     border: 4px solid #666;
-    background: #666;
+    /* background: #666; */
 }
 
 .preview-frame.desktop,
@@ -685,6 +694,7 @@ a:hover {
     align-items: flex-start;
     justify-content: center;
     padding: var(--spacing-md);
+    width: 100%;
 }
 
 /* Device frame animations */
@@ -799,6 +809,7 @@ a:hover {
 .footer-links {
     display: flex;
     align-items: center;
+    justify-content: end;
     gap: var(--spacing-sm);
     font-size: var(--font-size-sm);
 }

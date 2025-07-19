@@ -1,3 +1,10 @@
+<?php
+// Check if we're on an authentication page
+$current_file = basename($_SERVER['PHP_SELF']);
+$is_auth_page = in_array($current_file, ['login.php', 'signup.php', 'forgot-password.php']);
+
+// Only show footer if not on auth pages
+if (!$is_auth_page): ?>
 <!-- Footer -->
     <footer class="app-footer">
         <div class="container">
@@ -21,6 +28,7 @@
             </div>
         </div>
     </footer>
+<?php endif; ?>
 
     <!-- Scripts -->
     <?php 

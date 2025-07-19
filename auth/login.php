@@ -61,76 +61,107 @@ include __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="auth-container">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center align-items-center min-vh-100">
-            <div class="col-md-6 col-lg-5">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <div class="auth-logo">
+            <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4">
+                <div class="card shadow-lg border-0 auth-card">
+                    <!-- Card Header -->
+                    <div class="card-header bg-transparent border-0 text-center py-4">
+                        <div class="auth-logo mx-auto mb-3">
                             <i class="bi bi-code-slash"></i>
                         </div>
-                        <h2 class="auth-title">Welcome Back</h2>
-                        <p class="auth-subtitle">Sign in to your account to continue coding</p>
+                        <h2 class="card-title h3 fw-bold text-primary mb-2">Welcome Back</h2>
+                        <p class="text-muted mb-0">Sign in to your account to continue coding</p>
                     </div>
 
-                    <?php if ($error): ?>
-                        <div class="alert alert-danger" role="alert">
-                            <i class="bi bi-exclamation-triangle"></i>
-                            <?php echo htmlspecialchars($error); ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <form method="POST" class="auth-form" novalidate>
-                        <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email Address</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-envelope"></i>
-                                </span>
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       placeholder="Enter your email" value="<?php echo htmlspecialchars($email ?? ''); ?>" required>
+                    <!-- Card Body -->
+                    <div class="card-body px-4 px-sm-5 pb-5">
+                        <?php if ($error): ?>
+                            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                <div><?php echo htmlspecialchars($error); ?></div>
                             </div>
-                        </div>
+                        <?php endif; ?>
 
-                        <div class="form-group">
-                            <label for="password" class="form-label">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-lock"></i>
-                                </span>
-                                <input type="password" class="form-control" id="password" name="password" 
-                                       placeholder="Enter your password" required>
-                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                    <i class="bi bi-eye"></i>
+                        <form method="POST" class="needs-validation" novalidate>
+                            <input type="hidden" name="csrf_token" value="<?php echo generateCSRFToken(); ?>">
+                            
+                            <!-- Email Field -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-medium">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-envelope text-muted"></i>
+                                    </span>
+                                    <input type="email" 
+                                           class="form-control border-start-0 ps-0" 
+                                           id="email" 
+                                           name="email" 
+                                           placeholder="Enter your email address" 
+                                           value="<?php echo htmlspecialchars($email ?? ''); ?>" 
+                                           required>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid email address.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-medium">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-lock text-muted"></i>
+                                    </span>
+                                    <input type="password" 
+                                           class="form-control border-start-0 border-end-0 ps-0" 
+                                           id="password" 
+                                           name="password" 
+                                           placeholder="Enter your password" 
+                                           required>
+                                    <button class="btn btn-outline-light border-start-0" 
+                                            type="button" 
+                                            id="togglePassword"
+                                            title="Toggle password visibility">
+                                        <i class="bi bi-eye text-muted"></i>
+                                    </button>
+                                    <div class="invalid-feedback">
+                                        Please provide your password.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                                    <label class="form-check-label text-muted" for="remember">
+                                        Remember me for 30 days
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid mb-4">
+                                <button type="submit" class="btn btn-primary btn-lg fw-medium">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                                    Sign In
                                 </button>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="remember" name="remember">
-                                <label class="form-check-label" for="remember">
-                                    Remember me
-                                </label>
+                            <!-- Links -->
+                            <div class="text-center">
+                                <div class="mb-2">
+                                    <span class="text-muted">Don't have an account?</span>
+                                    <a href="signup.php" class="text-decoration-none fw-medium ms-1">Create one here</a>
+                                </div>
+                                <div>
+                                    <a href="forgot-password.php" class="text-muted text-decoration-none">
+                                        <i class="bi bi-question-circle me-1"></i>Forgot your password?
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-auth">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                            Sign In
-                        </button>
-                    </form>
-
-                    <div class="auth-footer">
-                        <p class="auth-link">
-                            Don't have an account? 
-                            <a href="signup.php" class="link-primary">Create one here</a>
-                        </p>
-                        <p class="auth-link">
-                            <a href="forgot-password.php" class="link-secondary">Forgot your password?</a>
-                        </p>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -157,19 +188,26 @@ $inline_js = "
         }
     });
     
-    // Form validation
-    document.querySelector('.auth-form').addEventListener('submit', function(e) {
+    // Bootstrap form validation
+    document.querySelector('.needs-validation').addEventListener('submit', function(e) {
+        const form = this;
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
         
-        if (!email || !password) {
+        if (!form.checkValidity() || !email || !password) {
             e.preventDefault();
-            Swal.fire({
-                icon: 'error',
-                title: 'Validation Error',
-                text: 'Please fill in all required fields.'
-            });
+            e.stopPropagation();
+            
+            if (!email || !password) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Please fill in all required fields.'
+                });
+            }
         }
+        
+        form.classList.add('was-validated');
     });
 ";
 

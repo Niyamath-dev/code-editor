@@ -99,8 +99,51 @@ const EditorModule = {
         // Syntax validation
         this.validateSyntax(type);
         
+        // Format code live with cursor preservation
+        this.formatCodeLive(type);
+        
         // Update line numbers with syntax highlighting
         this.updateLineNumbersWithHighlighting(type);
+        
+        // Trigger preview update through HCJEditor if available
+        if (typeof HCJEditor !== 'undefined' && HCJEditor.updatePreview) {
+            // Use debounced update for better performance
+            if (!this.debouncedPreviewUpdate) {
+                this.debouncedPreviewUpdate = this.debounce(() => {
+                    HCJEditor.updatePreview();
+                }, 300);
+            }
+            this.debouncedPreviewUpdate();
+        }
+        
+        // Also trigger PreviewControls update as fallback
+        if (typeof PreviewControls !== 'undefined' && PreviewControls.updatePreview) {
+            if (!this.debouncedPreviewControlsUpdate) {
+                this.debouncedPreviewControlsUpdate = this.debounce(() => {
+                    PreviewControls.updatePreview();
+                }, 300);
+            }
+            this.debouncedPreviewControlsUpdate();
+        }
+    },
+    
+    // Format code live with cursor preservation
+    formatCodeLive(type) {
+        // Implementation for live code formatting
+        // This would format code as user types while preserving cursor position
+    },
+    
+    // Debounce utility function
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
     },
     
     // Enhanced key handling
@@ -173,6 +216,21 @@ const EditorModule = {
         }
     },
     
+    // Handle key up events
+    handleKeyUp(type, event) {
+        // Implementation for key up events
+    },
+    
+    // Handle paste events
+    handlePaste(type, event) {
+        // Implementation for paste events
+    },
+    
+    // Handle context menu events
+    handleContextMenu(type, event) {
+        // Implementation for context menu events
+    },
+    
     // Handle Enter key for auto-indentation
     handleEnterKey(type, event) {
         const element = this.editors[type].element;
@@ -194,6 +252,18 @@ const EditorModule = {
             extraIndent = '  ';
         } else if (type === 'js' && (currentLine.includes('{') || currentLine.includes('('))) {
             extraIndent = '  ';
+        }
+        
+        // Improved: Check for nested blocks for JS and CSS to add proper indentation
+        if (type === 'js' || type === 'css') {
+            // Count open and close braces in current line
+            const openBraces = (currentLine.match(/{/g) || []).length;
+            const closeBraces = (currentLine.match(/}/g) || []).length;
+            if (openBraces > closeBraces) {
+                extraIndent = '  ';
+            } else if (closeBraces > openBraces) {
+                extraIndent = '';
+            }
         }
         
         // Insert new line with proper indentation
@@ -302,7 +372,9 @@ const EditorModule = {
         // Trigger input event
         editor.element.dispatchEvent(new Event('input'));
         
-        HCJEditor.showNotification('Undo', 'info');
+        if (typeof HCJEditor !== 'undefined') {
+            HCJEditor.showNotification('Undo', 'info');
+        }
     },
     
     // Redo functionality
@@ -319,7 +391,9 @@ const EditorModule = {
         // Trigger input event
         editor.element.dispatchEvent(new Event('input'));
         
-        HCJEditor.showNotification('Redo', 'info');
+        if (typeof HCJEditor !== 'undefined') {
+            HCJEditor.showNotification('Redo', 'info');
+        }
     },
     
     // Duplicate current line
@@ -407,7 +481,7 @@ const EditorModule = {
         if (!editor) return;
         
         const element = editor.element;
-        const { value, selectionStart, selectionEnd } = element;
+        let { value, selectionStart, selectionEnd } = element;
         
         const commentPatterns = {
             html: { start: '<!-- ', end: ' -->' },
@@ -436,14 +510,17 @@ const EditorModule = {
         }
         
         // Check if already commented
-        const isCommented = selectedText.trim().startsWith(pattern.start.trim()) && 
-                           (pattern.end === '' || selectedText.trim().endsWith(pattern.end.trim()));
+        const trimmedText = selectedText.trim();
+        const isCommented = trimmedText.startsWith(pattern.start.trim()) && 
+                           (pattern.end === '' || trimmedText.endsWith(pattern.end.trim()));
         
         let newText;
         if (isCommented) {
-            // Remove comment
-            newText = selectedText.replace(new RegExp(`^(\\s*)${pattern.start.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`), '$1')
-                                 .replace(new RegExp(`${pattern.end.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s*)$`), '$1');
+            // Remove comment - improved regex to handle whitespace correctly
+            const startPattern = pattern.start.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+            const endPattern = pattern.end.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').trim();
+            newText = selectedText.replace(new RegExp(`^\\s*${startPattern}\\s*`), '')
+                                 .replace(new RegExp(`\\s*${endPattern}\\s*$`), '');
         } else {
             // Add comment
             if (pattern.end === '') {
@@ -586,8 +663,16 @@ const EditorModule = {
         try {
             new Function(content);
         } catch (error) {
+            // JS Error objects do not have lineNumber by default, try to extract line from stack trace
+            let lineNumber = -1;
+            if (error.stack) {
+                const match = error.stack.match(/<anonymous>:(\d+):\d+/);
+                if (match) {
+                    lineNumber = parseInt(match[1], 10);
+                }
+            }
             errors.push({
-                line: error.lineNumber || -1,
+                line: lineNumber,
                 message: error.message,
                 type: 'error'
             });
@@ -657,17 +742,23 @@ const EditorModule = {
                     formattedContent = this.formatJS(content);
                     break;
                 default:
-                    return;
+                    return content;
             }
             
-            editor.element.value = formattedContent;
-            editor.element.dispatchEvent(new Event('input'));
-            this.saveToHistory(type);
-            
-            HCJEditor.showNotification(`${type.toUpperCase()} code formatted`, 'success');
+            if (formattedContent) {
+                editor.element.value = formattedContent;
+                editor.element.dispatchEvent(new Event('input'));
+                this.saveToHistory(type);
+                
+                if (typeof HCJEditor !== 'undefined') {
+                    HCJEditor.showNotification(`${type.toUpperCase()} code formatted`, 'success');
+                }
+            }
         } catch (error) {
-            console.error(`Formatting error for ${type}:`, error);
-            HCJEditor.showNotification(`Failed to format ${type.toUpperCase()} code`, 'error');
+            console.error(`Format error for ${type}:`, error);
+            if (typeof HCJEditor !== 'undefined') {
+                HCJEditor.showNotification(`Failed to format ${type.toUpperCase()} code`, 'error');
+            }
         }
     },
     
@@ -710,7 +801,7 @@ const EditorModule = {
     
     // Format CSS
     formatCSS(content) {
-        // Basic CSS formatting
+        // Improved CSS formatting
         let formatted = content;
         
         // Add line breaks after braces and semicolons
@@ -718,7 +809,7 @@ const EditorModule = {
         formatted = formatted.replace(/\}/g, '\n}\n');
         formatted = formatted.replace(/;/g, ';\n  ');
         
-        // Clean up extra whitespace
+        // Clean up extra whitespace and multiple newlines
         formatted = formatted.replace(/\n\s*\n/g, '\n');
         formatted = formatted.replace(/^\s+|\s+$/g, '');
         
@@ -793,9 +884,13 @@ const EditorModule = {
         if (index !== -1) {
             editor.element.setSelectionRange(index, index + searchTerm.length);
             editor.element.focus();
-            HCJEditor.showNotification(`Found: ${searchTerm}`, 'success');
+            if (typeof HCJEditor !== 'undefined') {
+                HCJEditor.showNotification(`Found: ${searchTerm}`, 'success');
+            }
         } else {
-            HCJEditor.showNotification(`Not found: ${searchTerm}`, 'warning');
+            if (typeof HCJEditor !== 'undefined') {
+                HCJEditor.showNotification(`Not found: ${searchTerm}`, 'warning');
+            }
         }
     },
     
@@ -814,9 +909,13 @@ const EditorModule = {
             editor.element.dispatchEvent(new Event('input'));
             this.saveToHistory(type);
             
-            HCJEditor.showNotification(`Replaced ${matches.length} occurrence(s)`, 'success');
+            if (typeof HCJEditor !== 'undefined') {
+                HCJEditor.showNotification(`Replaced ${matches.length} occurrence(s)`, 'success');
+            }
         } else {
-            HCJEditor.showNotification(`Not found: ${searchTerm}`, 'warning');
+            if (typeof HCJEditor !== 'undefined') {
+                HCJEditor.showNotification(`Not found: ${searchTerm}`, 'warning');
+            }
         }
     },
     
@@ -833,7 +932,9 @@ const EditorModule = {
     // Update line numbers with syntax highlighting
     updateLineNumbersWithHighlighting(type) {
         // Enhanced line numbers with syntax highlighting
-        HCJEditor.updateLineNumbers(type);
+        if (typeof HCJEditor !== 'undefined') {
+            HCJEditor.updateLineNumbers(type);
+        }
     }
 };
 

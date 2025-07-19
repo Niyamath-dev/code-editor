@@ -131,7 +131,15 @@ const HCJEditor = {
     handleEditorChange(type) {
         this.state.hasUnsavedChanges = true;
         this.updateLineNumbers(type);
-        this.updatePreview();
+        
+        // Use debounced preview update for better performance
+        if (!this.debouncedUpdatePreview) {
+            this.debouncedUpdatePreview = this.debounce(() => {
+                this.updatePreview();
+            }, 300);
+        }
+        this.debouncedUpdatePreview();
+        
         this.showUnsavedIndicator();
     },
     
@@ -230,38 +238,97 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update live preview
     updatePreview() {
-        if (!this.elements.previewFrame) return;
+        if (!this.elements.previewFrame) {
+            console.warn('Preview frame not found');
+            return;
+        }
         
         const html = this.elements.htmlEditor?.value || '';
         const css = this.elements.cssEditor?.value || '';
         const js = this.elements.jsEditor?.value || '';
         
-        const previewContent = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Preview</title>
-                <style>${css}</style>
-            </head>
-            <body>
-                ${html}
-                <script>
-                    try {
-                        ${js}
-                    } catch (error) {
-                        console.error('JavaScript Error:', error);
-                    }
-                </script>
-            </body>
-            </html>
-        `;
+        // Enhanced preview content with better error handling
+        const previewContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Preview</title>
+    <style>
+        /* Reset and base styles for preview */
+        * {
+            box-sizing: border-box;
+        }
         
-        const previewDoc = this.elements.previewFrame.contentDocument || this.elements.previewFrame.contentWindow.document;
-        previewDoc.open();
-        previewDoc.write(previewContent);
-        previewDoc.close();
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        /* Error display styles */
+        .preview-error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        /* User CSS */
+        ${css}
+    </style>
+</head>
+<body>
+    ${html}
+    
+    <script>
+        // Error handling for preview
+        window.addEventListener('error', function(e) {
+            console.error('Preview Error:', e.error);
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'preview-error';
+            errorDiv.innerHTML = '<strong>JavaScript Error:</strong><br>' + e.error.message + '<br><small>Line: ' + e.lineno + '</small>';
+            document.body.insertBefore(errorDiv, document.body.firstChild);
+        });
+        
+        // User JavaScript
+        try {
+            ${js}
+        } catch (error) {
+            console.error('User JavaScript Error:', error);
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'preview-error';
+            errorDiv.innerHTML = '<strong>JavaScript Error:</strong><br>' + error.message;
+            document.body.insertBefore(errorDiv, document.body.firstChild);
+        }
+        
+        // Notify parent frame that preview is loaded
+        try {
+            if (window.parent && window.parent.PreviewControls) {
+                window.parent.PreviewControls.onPreviewContentLoad();
+            }
+        } catch (e) {
+            // Ignore cross-origin errors
+        }
+    </script>
+</body>
+</html>`;
+        
+        try {
+            const previewDoc = this.elements.previewFrame.contentDocument || this.elements.previewFrame.contentWindow.document;
+            previewDoc.open();
+            previewDoc.write(previewContent);
+            previewDoc.close();
+            
+            console.log('Preview updated successfully');
+        } catch (error) {
+            console.error('Preview update error:', error);
+            this.showNotification('Preview update failed', 'error');
+        }
     },
     
     // Handle keyboard shortcuts
@@ -560,64 +627,64 @@ function downloadFile(content, filename, mimeType = 'text/plain') {
 }
 
 // Initialize the application when DOM is loaded
-// document.addEventListener('DOMContentLoaded', () => {
-//     HCJEditor.init();
+document.addEventListener('DOMContentLoaded', () => {
+    HCJEditor.init();
 
-//     // Add shareProject function
-//     window.shareProject = function() {
-//         const html = HCJEditor.elements.htmlEditor?.value || '';
-//         const css = HCJEditor.elements.cssEditor?.value || '';
-//         const js = HCJEditor.elements.jsEditor?.value || '';
-//         const projectName = prompt('Enter project name for sharing:', 'Untitled Project') || 'Untitled Project';
+    // Add shareProject function
+    window.shareProject = function() {
+        const html = HCJEditor.elements.htmlEditor?.value || '';
+        const css = HCJEditor.elements.cssEditor?.value || '';
+        const js = HCJEditor.elements.jsEditor?.value || '';
+        const projectName = prompt('Enter project name for sharing:', 'Untitled Project') || 'Untitled Project';
 
-//         if (!html && !css && !js) {
-//             HCJEditor.showNotification('Cannot share empty project.', 'warning');
-//             return;
-//         }
+        if (!html && !css && !js) {
+            HCJEditor.showNotification('Cannot share empty project.', 'warning');
+            return;
+        }
 
-//         fetch('api/share_project.php', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 project_name: projectName,
-//                 html: html,
-//                 css: css,
-//                 js: js
-//             })
-//         })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok: ' + response.statusText);
-//             }
-//             return response.json();
-//         })
-//         .then(data => {
-//             console.log('Share project response:', data);
-//             if (data.success && data.share_url) {
-//                 // Show shareable link to user
-//                 const shareLink = data.share_url;
-//                 if (navigator.clipboard && window.isSecureContext) {
-//                     navigator.clipboard.writeText(shareLink).then(() => {
-//                         HCJEditor.showNotification('Share link copied to clipboard!', 'success');
-//                         alert('Share your project using this link:\n' + shareLink);
-//                     }).catch(() => {
-//                         alert('Share your project using this link:\n' + shareLink);
-//                     });
-//                 } else {
-//                     alert('Share your project using this link:\n' + shareLink);
-//                 }
-//             } else {
-//                 HCJEditor.showNotification('Failed to share project.', 'error');
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Share project error:', error);
-//             HCJEditor.showNotification('Error sharing project.', 'error');
-//         });
-//     };
-// });
+        fetch('api/share_project.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                project_name: projectName,
+                html: html,
+                css: css,
+                js: js
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Share project response:', data);
+            if (data.success && data.share_url) {
+                // Show shareable link to user
+                const shareLink = data.share_url;
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(shareLink).then(() => {
+                        HCJEditor.showNotification('Share link copied to clipboard!', 'success');
+                        alert('Share your project using this link:\n' + shareLink);
+                    }).catch(() => {
+                        alert('Share your project using this link:\n' + shareLink);
+                    });
+                } else {
+                    alert('Share your project using this link:\n' + shareLink);
+                }
+            } else {
+                HCJEditor.showNotification('Failed to share project.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Share project error:', error);
+            HCJEditor.showNotification('Error sharing project.', 'error');
+        });
+    };
+});
 
 // Export for global access
 window.HCJEditor = HCJEditor;

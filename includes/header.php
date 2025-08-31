@@ -17,8 +17,9 @@ $flash = getFlashMessage();
     <link rel="icon" type="image/x-icon" href="<?php echo APP_URL; ?>/assets/img/favicon.ico">
     
     <!-- Stylesheets -->
-    <?php 
-    $base_path = (basename($_SERVER['PHP_SELF']) === 'index.php' && dirname($_SERVER['PHP_SELF']) === '/code-editor') ? '' : '../';
+    <?php
+    $current_file = basename($_SERVER['PHP_SELF']);
+    $base_path = (in_array($current_file, ['index.php', 'landing.php', 'privacy-policy.php', 'terms-conditions.php']) && dirname($_SERVER['PHP_SELF']) === '/code-editor') ? '' : '../';
     ?>
     <link rel="stylesheet" href="<?php echo $base_path; ?>bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $base_path; ?>cdnjs/sweetalert.min.css">

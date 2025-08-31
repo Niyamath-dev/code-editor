@@ -11,18 +11,18 @@ if (!$is_auth_page): ?>
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="footer-copyright">
-                        &copy; <?php echo date('Y'); ?> <?php echo APP_NAME; ?> v<?php echo APP_VERSION; ?>. 
-                        Developed with <i class="bi bi-heart-fill text-danger"></i> by 
-                        <a href="#" class="footer-link">HCJ Team</a>
+                        &copy; <?php echo date('Y'); ?> <?php echo APP_NAME; ?> v<?php echo APP_VERSION; ?>
+                        <!-- Developed with <i class="bi bi-heart-fill text-danger"></i> by 
+                        <a href="#" class="footer-link">HCJ Team</a> -->
                     </div>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="footer-links">
-                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="<?php echo $base_path; ?>privacy-policy.php" class="footer-link">Privacy Policy</a>
                         <span class="separator">|</span>
-                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="<?php echo $base_path; ?>terms-conditions.php" class="footer-link">Terms & Conditions</a>
                         <span class="separator">|</span>
-                        <a href="#" class="footer-link">Support</a>
+                        <a href="mailto:support@hcjcodeeditor.com" class="footer-link">Support</a>
                     </div>
                 </div>
             </div>
@@ -31,8 +31,9 @@ if (!$is_auth_page): ?>
 <?php endif; ?>
 
     <!-- Scripts -->
-    <?php 
-    $base_path = (basename($_SERVER['PHP_SELF']) === 'index.php' && dirname($_SERVER['PHP_SELF']) === '/code-editor') ? '' : '../';
+    <?php
+    $current_file = basename($_SERVER['PHP_SELF']);
+    $base_path = (in_array($current_file, ['index.php', 'landing.php', 'privacy-policy.php', 'terms-conditions.php']) && dirname($_SERVER['PHP_SELF']) === '/code-editor') ? '' : '../';
     ?>
     <script src="<?php echo $base_path; ?>bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo $base_path; ?>cdnjs/sweetalert.min.js"></script>

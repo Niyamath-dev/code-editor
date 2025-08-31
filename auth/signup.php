@@ -198,7 +198,7 @@ include __DIR__ . '/../includes/header.php';
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
                                     <label class="form-check-label text-muted" for="terms">
-                                        I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                                        I agree to the <a href="<?php echo $base_path; ?>terms-conditions.php" class="text-decoration-none">Terms of Service</a> and <a href="<?php echo $base_path; ?>privacy-policy.php" class="text-decoration-none">Privacy Policy</a>
                                     </label>
                                     <div class="invalid-feedback">
                                         You must accept the terms and conditions.

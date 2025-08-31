@@ -34,7 +34,7 @@ include __DIR__ . '/includes/header.php';
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><h6 class="dropdown-header">Welcome back!</h6></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#" onclick="EditorModule.showPreferences()">
+                    <li><a class="dropdown-item" href="#download-zip" onclick="EditorModule.showPreferences()">
                         <i class="bi bi-gear"></i> Preferences
                     </a></li>
                     <!-- <li><a class="dropdown-item" href="#" onclick="EditorModule.showKeyboardShortcuts()">
@@ -58,7 +58,7 @@ include __DIR__ . '/includes/header.php';
 
 <!-- Main Content -->
 <main class="main-content">
-    <div class="container">
+    <div class="container-fluid">
         <!-- Welcome Section -->
         <div class="text-center mb-4">
             <h1 class="display-6 fw-bold">Professional Code Editor</h1>
@@ -243,7 +243,7 @@ include __DIR__ . '/includes/header.php';
         </div>
 
         <!-- Quick Actions -->
-        <div class="row mt-4 justify-content-center">
+        <div id="download-zip" class="row mt-4 justify-content-center">
             <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-body text-center">

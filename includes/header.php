@@ -19,7 +19,7 @@ $flash = getFlashMessage();
     <!-- Stylesheets -->
     <?php
     $current_file = basename($_SERVER['PHP_SELF']);
-    $base_path = (in_array($current_file, ['index.php', 'landing.php', 'privacy-policy.php', 'terms-conditions.php']) && dirname($_SERVER['PHP_SELF']) === '/code-editor') ? '' : '../';
+    $base_path = (in_array($current_file, ['index.php', 'privacy-policy.php', 'terms-conditions.php']) && dirname($_SERVER['PHP_SELF']) === '/code-editor') ? '' : '../';
     ?>
     <link rel="stylesheet" href="<?php echo $base_path; ?>bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $base_path; ?>cdnjs/sweetalert.min.css">

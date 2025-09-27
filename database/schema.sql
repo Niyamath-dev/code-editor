@@ -67,3 +67,17 @@ CREATE TABLE IF NOT EXISTS shared_projects (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Code history table for versioning user code
+CREATE TABLE IF NOT EXISTS code_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    html_code LONGTEXT,
+    css_code LONGTEXT,
+    js_code LONGTEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_user_id (user_id),
+    INDEX idx_created_at (created_at)
+);

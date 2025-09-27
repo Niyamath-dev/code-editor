@@ -47,6 +47,23 @@ try {
     ");
     echo "✓ Users table created successfully.<br>";
     
+    // Create code_history table
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS code_history (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            html_code LONGTEXT,
+            css_code LONGTEXT,
+            js_code LONGTEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            INDEX idx_user_id (user_id),
+            INDEX idx_created_at (created_at)
+        )
+    ");
+    echo "✓ Code history table created successfully.<br>";
+    
     echo "<br><strong style='color: green;'>✅ Database setup completed successfully!</strong><br>";
     echo "<br>You can now:<br>";
     echo "1. <a href='auth/signup.php'>Sign up for a new account</a><br>";

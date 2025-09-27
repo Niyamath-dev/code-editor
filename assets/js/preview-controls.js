@@ -8,7 +8,6 @@ const PreviewControls = {
     currentDevice: 'desktop',
     currentOrientation: 'portrait',
     currentZoom: 1,
-    isCustomViewport: false,
     
     // Comprehensive device configurations
     devices: {
@@ -40,7 +39,7 @@ const PreviewControls = {
             viewport: '390 x 844',
             class: 'mobile',
             category: 'mobile',
-            name: 'iPhone 12/13/14',
+            name: 'Mobile',
             icon: 'bi-phone',
             landscape: { width: '844px', height: '390px', viewport: '844 x 390' }
         },
@@ -82,7 +81,7 @@ const PreviewControls = {
             viewport: '768 x 1024',
             class: 'tablet',
             category: 'tablet',
-            name: 'iPad',
+            name: 'Tablet',
             icon: 'bi-tablet',
             landscape: { width: '1024px', height: '768px', viewport: '1024 x 768' }
         },
@@ -222,21 +221,7 @@ const PreviewControls = {
             });
         }
         
-        // Custom viewport inputs
-        const customWidthInput = document.querySelector('.custom-width-input');
-        const customHeightInput = document.querySelector('.custom-height-input');
-        const applyCustomBtn = document.querySelector('.apply-custom-btn');
-        
-        if (applyCustomBtn && customWidthInput && customHeightInput) {
-            applyCustomBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const width = parseInt(customWidthInput.value);
-                const height = parseInt(customHeightInput.value);
-                if (width && height) {
-                    this.setCustomViewport(width, height);
-                }
-            });
-        }
+
         
         // Device dropdown
         const deviceDropdown = document.querySelector('.device-dropdown');
@@ -628,32 +613,7 @@ const PreviewControls = {
         };
     },
     
-    // Set custom viewport size
-    setCustomViewport(width, height) {
-        const previewFrame = document.getElementById('codeMobile');
-        const viewportSize = document.querySelector('.viewport-size');
-        
-        if (previewFrame && viewportSize) {
-            previewFrame.style.width = width + 'px';
-            previewFrame.style.height = height + 'px';
-            previewFrame.style.maxWidth = 'none';
-            previewFrame.style.margin = '0 auto';
-            previewFrame.style.transform = `scale(${this.currentZoom})`;
-            
-            viewportSize.textContent = `${width} x ${height}`;
-            this.currentDevice = 'custom';
-            this.isCustomViewport = true;
-            
-            // Remove active state from device buttons
-            const deviceButtons = document.querySelectorAll('.device-btn');
-            deviceButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Update breakpoint indicator
-            this.updateBreakpointIndicator(width);
-            
-            HCJEditor.showNotification(`Custom viewport: ${width}x${height}`, 'info');
-        }
-    },
+
     
     // Toggle orientation (portrait/landscape)
     toggleOrientation() {
@@ -883,9 +843,6 @@ const PreviewControls = {
     getCurrentViewportWidth() {
         if (this.currentDevice === 'desktop') {
             return window.innerWidth;
-        } else if (this.isCustomViewport) {
-            const previewFrame = document.getElementById('codeMobile');
-            return previewFrame ? parseInt(previewFrame.style.width) : 0;
         } else {
             const config = this.devices[this.currentDevice];
             if (this.currentOrientation === 'landscape' && config.landscape) {

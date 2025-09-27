@@ -11,7 +11,8 @@ $additional_js = [
     'assets/js/editor.js',
     'assets/js/preview-controls.js',
     'assets/js/download-manager.js',
-    'assets/js/main-page.js'
+    'assets/js/main-page.js',
+    'assets/js/history-manager.js'
 ];
 
 include __DIR__ . '/includes/header.php';
@@ -81,6 +82,9 @@ include __DIR__ . '/includes/header.php';
                                 </button>
                                 <button class="editor-control-btn" onclick="EditorModule.formatCode('html')" title="Format HTML">
                                     <i class="bi bi-code"></i>
+                                </button>
+                                <button class="editor-control-btn" onclick="HistoryManager.saveToHistory()" title="Save to History">
+                                    <i class="bi bi-save"></i>
                                 </button>
                                 <button class="editor-control-btn" onclick="clearEditor('html')" title="Clear HTML">
                                     <i class="bi bi-trash"></i>
@@ -175,10 +179,10 @@ include __DIR__ . '/includes/header.php';
                             <button class="preview-btn device-btn active" data-device="desktop" title="Desktop View">
                                 <i class="bi bi-display"></i>
                             </button>
-                            <button class="preview-btn device-btn" data-device="ipad" title="iPad View">
+                            <button class="preview-btn device-btn" data-device="ipad" title="Tablet View">
                                 <i class="bi bi-tablet"></i>
                             </button>
-                            <button class="preview-btn device-btn" data-device="iphone-12" title="iPhone View">
+                            <button class="preview-btn device-btn" data-device="iphone-12" title="Mobile View">
                                 <i class="bi bi-phone"></i>
                             </button>
                         </div>
@@ -204,15 +208,6 @@ include __DIR__ . '/includes/header.php';
                             </button>
                         </div>
                         
-                        <!-- Custom Viewport -->
-                        <div class="custom-viewport-controls">
-                            <input type="number" class="custom-width-input" placeholder="W" min="200" max="4000" title="Custom Width">
-                            <span style="color: rgba(255,255,255,0.6);">×</span>
-                            <input type="number" class="custom-height-input" placeholder="H" min="200" max="3000" title="Custom Height">
-                            <button class="preview-btn apply-custom-btn" title="Apply Custom Size">
-                                <i class="bi bi-check"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
                 
@@ -282,6 +277,27 @@ include __DIR__ . '/includes/header.php';
                 </div>
             </div>
             -->
+        </div>
+
+        <!-- Code History Section -->
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <i class="bi bi-clock-history"></i> Code History
+                    </h6>
+                    <button class="btn btn-sm btn-outline-primary" onclick="HistoryManager.loadHistory()">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="history-tabs">
+                        <div class="text-center text-muted">
+                            <i class="bi bi-info-circle"></i> No history items yet. Save your code to create history.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- <div class="mt-4">
